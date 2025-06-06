@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Card Video Rotation - Full Page Mouse</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #111;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .card {
+        width: 400px;
+        height: 250px;
+        perspective: 1000px;
+      }
+
+      .inner {
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        background: #000;
+        transition: transform 0.1s ease-out;
+      }
+
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="inner" id="inner">
+        <img src="./card.gif" alt="" srcset="" />
+      </div>
+    </div>
+
+    <script>
+      const inner = document.getElementById('inner');
+      const maxRotate = 15; // degrees
+
+      document.addEventListener('mousemove', (e) => {
+        const x = e.clientX / window.innerWidth - 0.5;
+        const y = e.clientY / window.innerHeight - 0.5;
+
+        const rotateY = x * 2 * maxRotate;
+        const rotateX = -y * 2 * maxRotate;
+
+        inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      document.addEventListener('mouseleave', () => {
+        inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      });
+    </script>
+  </body>
+</html>
